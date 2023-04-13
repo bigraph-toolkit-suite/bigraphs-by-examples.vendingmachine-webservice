@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bigraphMetaModel:BBigraph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bigraphMetaModel="de.tud.inf.st.bigraphs" xsi:schemaLocation="de.tud.inf.st.bigraphs vmMetaModel.ecore">
+    <bRoots>
+        <bChild xsi:type="bigraphMetaModel:VM" name="v0">
+            <bChild xsi:type="bigraphMetaModel:BSite"/>
+            <bChild xsi:type="bigraphMetaModel:Container" name="v1"/>
+            <bChild xsi:type="bigraphMetaModel:Container" name="v2">
+                <bChild xsi:type="bigraphMetaModel:Tea" name="v3"/>
+                <bChild xsi:type="bigraphMetaModel:BSite" index="1"/>
+            </bChild>
+        </bChild>
+    </bRoots>
+</bigraphMetaModel:BBigraph>

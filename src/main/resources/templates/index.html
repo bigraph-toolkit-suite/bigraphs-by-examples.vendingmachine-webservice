@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Dominik Grzelak">
+    <title>Bigraphical Reactive Systems - Vending Machine Example</title>
+    <link rel="icon" type="image/x-icon" th:href="@{~/favicon.ico}">
+    <link th:href="@{~/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{~/css/style.css}" rel="stylesheet">
+    <link th:href="@{~/css/animation.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <h1>Web app of a bigraphical vending machine</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8 ">
+            <div class="img-container">
+                <img th:src="@{~/img/jaemin-don-UaG1auaI16g-unsplash.jpg}"
+                     class="img-fluid my-img" alt="" disabled="disabled"/>
+                <div class="rectangles rectangle-btn1"></div>
+                <div class="rectangles rectangle-btn2"></div>
+                <div class="rectangles rectangle-insertCoin"></div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="row">
+                <div class="col-12">
+                    You can interact with the vending machine by clicking at the specifically marked areas.
+                    The output of the app is below.
+                </div>
+                <div class="col-12 mt-3">
+                    <h5>Actions</h5>
+                    <div class="text-center">
+                        <small>These action modify the current bigraphical state</small>
+                    </div>
+                    <a class="form-control btn btn-outline-dark" id="btnRefillCoffee">Refill Coffee</a>
+                    <a class="form-control btn btn-outline-dark" id="btnRefillTea">Refill Tea</a>
+                    <a class="form-control btn btn-outline-dark" id="btnDonateCoin">Donate 1x Coins</a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <h5>Current State</h5>
+                    <div class="current-state-bigraph">
+                    </div>
+                    <h5>Output</h5>
+                    <div class="success-output alert-success">
+                    </div>
+                    <div class="error-output alert-warning">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script th:src="@{~/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{~/webjars/jquery/3.6.4/jquery.min.js}"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        let btnInsertCoin = async function () {
+            let response = await fetch('/insertCoin', {
+                method: "get"
+            });
+            clearOutputLogs()
+            // console.log("response", response)
+            if (response.status === 200) {
+                console.log("GOOD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.success-output').html(data.message);
+                    btnGetCurrentBigraphImage();
+                });
+            } else {
+                console.log("BAD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.error-output').html(data.message);
+                });
+            }
+        }
+
+        let btnDonateCoin = async function () {
+            let response = await fetch('/donateCoin', {
+                method: "get"
+            });
+            clearOutputLogs()
+            // console.log("response", response)
+            if (response.status === 200) {
+                console.log("GOOD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.success-output').html(data.message);
+                    btnGetCurrentBigraphImage();
+                });
+            } else {
+                console.log("BAD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.error-output').html(data.message);
+                });
+            }
+        }
+
+        let btnRefillTea = async function () {
+            let response = await fetch('/refillTea', {
+                method: "get"
+            });
+            clearOutputLogs()
+            // console.log("response", response)
+            if (response.status === 200) {
+                console.log("GOOD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.success-output').html(data.message);
+                    btnGetCurrentBigraphImage();
+                });
+            } else {
+                console.log("BAD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.error-output').html(data.message);
+                });
+            }
+        }
+
+        let btnRefillCoffee = async function () {
+            let response = await fetch('/refillCoffee', {
+                method: "get"
+            });
+            clearOutputLogs()
+            // console.log("response", response)
+            if (response.status === 200) {
+                console.log("GOOD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.success-output').html(data.message);
+                    btnGetCurrentBigraphImage();
+                });
+            } else {
+                console.log("BAD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.error-output').html(data.message);
+                });
+            }
+        }
+
+        let btnGetCoffee = async function () {
+            let response = await fetch('/pushBtnCoffee', {
+                method: "get"
+            });
+            clearOutputLogs()
+            // console.log("response", response)
+            if (response.status === 200) {
+                console.log("GOOD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.success-output').html(data.message);
+                    btnGetCurrentBigraphImage();
+                });
+            } else {
+                console.log("BAD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.error-output').html(data.message);
+                });
+            }
+        }
+
+        let btnGetTea = async function () {
+            let response = await fetch('/pushBtnTea', {
+                method: "get"
+            });
+            clearOutputLogs()
+            // console.log("response", response)
+            if (response.status === 200) {
+                console.log("GOOD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.success-output').html(data.message);
+                    btnGetCurrentBigraphImage();
+                });
+            } else {
+                console.log("BAD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.error-output').html(data.message);
+                });
+            }
+        }
+
+
+        $('.rectangles.rectangle-insertCoin').click(btnInsertCoin);
+        $('.rectangles.rectangle-btn1').click(btnGetCoffee);
+        $('.rectangles.rectangle-btn2').click(btnGetTea);
+
+        $('#btnRefillTea').click(btnRefillTea);
+        $('#btnRefillCoffee').click(btnRefillCoffee);
+        $('#btnDonateCoin').click(btnDonateCoin);
+
+        $('.rectangles.rectangle-insertCoin, .rectangles.rectangle-btn1, .rectangles.rectangle-btn2').hover(
+            function () {
+                $(this).addClass('shadow-drop-2-center shadow-pop-tr')
+            },
+            function () {
+                $(this).removeClass('shadow-drop-2-center shadow-pop-tr')
+            }
+        )
+
+        let btnGetCurrentBigraphImage = async function () {
+            console.log("Called: btnGetCurrentBigraphImage");
+            let response = await fetch('/getCurrentStateAsImage', {
+                method: "get"
+            });
+            // console.log("response", response)
+            if (response.status === 200) {
+                console.log("GOOD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                    $('.current-state-bigraph').empty();
+                    const img = $('<img class="img-fluid">');
+                    img.attr('src', 'data:image/png;base64, ' + data.bigraphImage);
+                    img.appendTo('.current-state-bigraph');
+                });
+            } else {
+                console.log("BAD Request!");
+                response.json().then(function (data) {
+                    console.log("data", data)
+                });
+            }
+        }
+
+        btnGetCurrentBigraphImage();
+
+        function clearOutputLogs() {
+            $('.success-output').html("");
+            $('.error-output').html("");
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+.img-container {
+    position: relative;
+    width: 100%;
+    min-height: 800px;
+}
+
+.current-state-bigraph {
+    width: 100%;
+    height: auto;
+}
+.my-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 452px;
+    min-width: 452px;
+    height: auto;
+    z-index: 1;
+}
+
+.rectangles {
+    z-index: 2;
+    border: 6px solid #ff0000;
+    background-color: rgba(47, 79, 255, 0.4);
+    border-radius: 8px;
+}
+
+.rectangles.rectangle-btn1 {
+    position: absolute;
+    top: 256px;
+    left: 283px;
+    width: 48px;
+    height: 33px;
+}
+
+.rectangles.rectangle-btn2 {
+    position: absolute;
+    top: 129px;
+    left: 53px;
+    width: 48px;
+    height: 33px;
+}
+
+.rectangles.rectangle-insertCoin {
+    position: absolute;
+    top: 414px;
+    left: 387px;
+    width: 51px;
+    height: 46px;
+}
+
+/*.my-img:nth-child(2) {*/
+/*    z-index: 2;*/
+/*}*/
+
+/*.my-img:nth-child(3) {*/
+/*    z-index: 3;*/
+/*}*/
+
+/*.my-img:nth-child(4) {*/
+/*    z-index: 4;*/
+/*}*/
