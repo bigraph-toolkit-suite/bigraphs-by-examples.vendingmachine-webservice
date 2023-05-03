@@ -20,7 +20,7 @@
 - Bigraph Framework 0.9.6-SNAPSHOT
 - Spring Data CDO 0.5.0-SNAPSHOT
 
-**Optionally*+
+**Optionally**
 - CDO Explorer: to view and modify the bigraph in the database easily 
   1) Download `cdo-master-latest-release-2023-01`, or use
   2) Any Eclipse IDE with CDO support, must support **CDO protocol version 48**
