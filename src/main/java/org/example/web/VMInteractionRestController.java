@@ -68,7 +68,7 @@ public class VMInteractionRestController {
             PureBigraph updatedModel = system.executeSingleRule();
             if (updatedModel != null) {
                 vendingMachineObject.bigraph = updatedModel;
-                vendingMachineObject.eModel = updatedModel.getModel();
+                vendingMachineObject.eModel = updatedModel.getInstanceModel();
                 vendingMachineObject = repository.save(vendingMachineObject);
                 return ResponseEntity.ok().body(ResponseData.create("OK!"));
             } else {
@@ -88,7 +88,7 @@ public class VMInteractionRestController {
             PureBigraph updatedModel = system.executeSingleRule();
             if (updatedModel != null) {
                 vendingMachineObject.bigraph = updatedModel;
-                vendingMachineObject.eModel = updatedModel.getModel();
+                vendingMachineObject.eModel = updatedModel.getInstanceModel();
                 vendingMachineObject = repository.save(vendingMachineObject);
                 return ResponseEntity.ok().body(ResponseData.create("OK!"));
             } else {
@@ -110,7 +110,7 @@ public class VMInteractionRestController {
             PureBigraph updatedModel = system.executeAllRulesUntilOneMatches();
             if (updatedModel != null) {
                 vendingMachineObject.bigraph = updatedModel;
-                vendingMachineObject.eModel = updatedModel.getModel();
+                vendingMachineObject.eModel = updatedModel.getInstanceModel();
                 vendingMachineObject = repository.save(vendingMachineObject);
                 return ResponseEntity.ok().body(ResponseData.create("OK!"));
             } else {
@@ -132,7 +132,7 @@ public class VMInteractionRestController {
             PureBigraph updatedModel = system.executeAllRulesUntilOneMatches();
             if (updatedModel != null) {
                 vendingMachineObject.bigraph = updatedModel;
-                vendingMachineObject.eModel = updatedModel.getModel();
+                vendingMachineObject.eModel = updatedModel.getInstanceModel();
                 vendingMachineObject = repository.save(vendingMachineObject);
                 return ResponseEntity.ok().body(ResponseData.create("OK!"));
             } else {
@@ -153,7 +153,7 @@ public class VMInteractionRestController {
             PureBigraph updatedModel = system.executeConsecutively();
             if (updatedModel != null) {
                 vendingMachineObject.bigraph = updatedModel;
-                vendingMachineObject.eModel = updatedModel.getModel();
+                vendingMachineObject.eModel = updatedModel.getInstanceModel();
                 vendingMachineObject = repository.save(vendingMachineObject);
                 return ResponseEntity.ok().body(ResponseData.create("OK!"));
             } else {
@@ -175,7 +175,7 @@ public class VMInteractionRestController {
             PureBigraph updatedModel = system.executeConsecutively();
             if (updatedModel != null) {
                 vendingMachineObject.bigraph = updatedModel;
-                vendingMachineObject.eModel = updatedModel.getModel();
+                vendingMachineObject.eModel = updatedModel.getInstanceModel();
                 vendingMachineObject = repository.save(vendingMachineObject);
                 return ResponseEntity.ok().body(ResponseData.create("OK!"));
             } else {
@@ -204,7 +204,7 @@ public class VMInteractionRestController {
             if (updatedModel != null) {
                 BigraphGraphvizExporter.toPNG(updatedModel, true, new File("agent.png"));
                 vendingMachineObject.bigraph = updatedModel;
-                vendingMachineObject.eModel = updatedModel.getModel();
+                vendingMachineObject.eModel = updatedModel.getInstanceModel();
                 vendingMachineObject = repository.save(vendingMachineObject);
                 return String.format(template, numOfCoins);
             }

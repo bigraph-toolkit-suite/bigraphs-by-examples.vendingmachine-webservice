@@ -122,8 +122,8 @@ public class VMRuleSet implements PropertyChangeListener {
         for (Map.Entry<String, ReactionRule<PureBigraph>> eachEntry : ruleMap.entrySet()) {
             String ruleName = eachEntry.getKey();
             ReactionRule<PureBigraph> rule = eachEntry.getValue();
-            template.insert(rule.getRedex().getModel(), "/system/rules/" + ruleName + "/L");
-            template.insert(rule.getReactum().getModel(), "/system/rules/" + ruleName + "/R");
+            template.insert(rule.getRedex().getInstanceModel(), "/system/rules/" + ruleName + "/L");
+            template.insert(rule.getReactum().getInstanceModel(), "/system/rules/" + ruleName + "/R");
         }
     }
 

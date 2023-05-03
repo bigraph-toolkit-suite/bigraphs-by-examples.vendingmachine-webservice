@@ -96,7 +96,7 @@ public class VendingMachineObject implements PropertyChangeListener {
 
     public void init(PureBigraph bigraph) {
         this.bigraph = bigraph;
-        this.eModel = bigraph.getModel();
+        this.eModel = bigraph.getInstanceModel();
         storeAgentInCdo();
         setupCdoListener();
     }
