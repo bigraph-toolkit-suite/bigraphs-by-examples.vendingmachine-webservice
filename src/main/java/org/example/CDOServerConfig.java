@@ -1,9 +1,9 @@
 package org.example;
 
-import de.tudresden.inf.st.spring.data.cdo.CdoServerConnectionString;
-import de.tudresden.inf.st.spring.data.cdo.CdoTemplate;
-import de.tudresden.inf.st.spring.data.cdo.SimpleCdoDbFactory;
-import de.tudresden.inf.st.spring.data.cdo.repository.config.EnableCdoRepositories;
+import org.bigraphs.spring.data.cdo.CdoServerConnectionString;
+import org.bigraphs.spring.data.cdo.CdoTemplate;
+import org.bigraphs.spring.data.cdo.SimpleCdoDbFactory;
+import org.bigraphs.spring.data.cdo.repository.config.EnableCdoRepositories;
 import org.example.repository.VMRepository;
 import org.example.service.CDOServerService;
 import org.springframework.boot.ExitCodeGenerator;

@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import de.tudresden.inf.st.spring.data.cdo.repository.CdoRepository;
+import org.bigraphs.spring.data.cdo.repository.CdoRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.ecore.EObject;
 import org.example.domain.data.VendingMachineObject;

@@ -1,10 +1,10 @@
 package org.example.domain.behavior;
 
-import de.tudresden.inf.st.bigraphs.core.impl.pure.PureBigraph;
-import de.tudresden.inf.st.bigraphs.core.reactivesystem.BigraphMatch;
-import de.tudresden.inf.st.bigraphs.simulation.matching.AbstractBigraphMatcher;
-import de.tudresden.inf.st.bigraphs.simulation.matching.MatchIterable;
-import de.tudresden.inf.st.bigraphs.simulation.matching.pure.PureReactiveSystem;
+import org.bigraphs.framework.core.impl.pure.PureBigraph;
+import org.bigraphs.framework.core.reactivesystem.BigraphMatch;
+import org.bigraphs.framework.simulation.matching.AbstractBigraphMatcher;
+import org.bigraphs.framework.simulation.matching.MatchIterable;
+import org.bigraphs.framework.simulation.matching.pure.PureReactiveSystem;
 
 import java.util.Iterator;
 

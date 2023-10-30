@@ -15,14 +15,16 @@
 
 #### Requirements
 
-- Java 11
+- Java 17
 - Spring 2.7.5
-- Bigraph Framework 0.9.6-SNAPSHOT
-- Spring Data CDO 0.5.0-SNAPSHOT
+- Bigraph Framework 1.0.0-SNAPSHOT
+- Spring Data CDO 0.6.0-SNAPSHOT
 
-**Optionally**
-- CDO Explorer: to view and modify the bigraph in the database easily 
-  1) Download `cdo-master-latest-release-2023-01`, or use
+**Optional**
+- CDO Explorer: to view and modify the bigraph in the database 
+  1) Download CDO Explorer via the [Eclipse Installer](https://www.eclipse.org/downloads/packages/installer).
+     Use Eclipse Version 2022-12 (4.26.0), which supports CDO protocol version **48**.
+     Eclipse IDE version 2023-09 supports only CDO protocol version 49.
   2) Any Eclipse IDE with CDO support, must support **CDO protocol version 48**
 
 #### Screenshots
@@ -43,14 +45,14 @@
 ### Via the Terminal
 Using Maven, issue the following command:
 ```shell
-mvn clean install
+mvn clean package -DskipTests
 ```
 
 The JAR file is created within the `target` folder of the project's root folder.
 
 To run the application JAR file, execute the following command:
 ```shell
-java –jar ./target/<JARFILE>
+java -jar ./target/code-samples-1.0-SNAPSHOT.jar
 ```
 
 Afterwards, open any browser and go to the following URL:

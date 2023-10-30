@@ -1,6 +1,6 @@
 package org.example.service;
 
-import de.tudresden.inf.st.spring.data.cdo.CDOStandaloneServer;
+import org.bigraphs.spring.data.cdo.CDOStandaloneServer;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -31,7 +31,7 @@ public class CDOServerService {
     public CDOStandaloneServer server;
     boolean started = false;
     boolean isStarting = false;
-    
+
     private Future<Void> startServer() {
         isStarting = true;
         try {

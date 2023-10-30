@@ -14,12 +14,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <!-- Versions -->
-        <bigraph-version>0.9.6-SNAPSHOT</bigraph-version>
-        <spring.data.cdo.version>0.5.0-SNAPSHOT</spring.data.cdo.version>
+        <bigraph-version>1.0.0-SNAPSHOT</bigraph-version>
+        <spring.data.cdo.version>0.6.0-SNAPSHOT</spring.data.cdo.version>
     </properties>
 
     <build>
@@ -28,18 +28,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <repositories>
-        <repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>STFactory</id>
-            <name>st-tu-dresden-artifactory</name>
-            <url>https://stgroup.jfrog.io/artifactory/st-tu-dresden-maven-repository/</url>
-        </repository>
         <repository>
             <id>Eclipse-Maven-Repository</id>
             <url>https://repo.eclipse.org/content/groups/releases/</url>
@@ -50,54 +50,47 @@
             <layout>p2</layout>
         </repository>
         <repository>
-            <id>spring-libs-snapshot</id>
-            <url>https://repo.spring.io/libs-snapshot</url>
-        </repository>
-        <repository>
-            <id>repository.spring.snapshot</id>
-            <name>Spring Snapshot Repository</name>
-            <url>http://repo.spring.io/snapshot</url>
-        </repository>
-        <repository>
-            <id>repository.spring.release</id>
-            <name>Spring GA Repository</name>
-            <url>http://repo.spring.io/release</url>
+            <id>ossrh</id>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
     </repositories>
 
     <dependencies>
         <!-- Bigraphs -->
         <dependency>
-            <groupId>de.tudresden.inf.st.bigraphs</groupId>
+            <groupId>org.bigraphs.framework</groupId>
             <artifactId>bigraph-core</artifactId>
             <version>${bigraph-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.eclipse.emf.cdo.common</groupId>
-                    <artifactId>org.eclipse.emf.cdo.common</artifactId>
-                </exclusion>
-            </exclusions>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.eclipse.emf.cdo.common</groupId>-->
+<!--                    <artifactId>org.eclipse.emf.cdo.common</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
         </dependency>
         <dependency>
-            <groupId>de.tudresden.inf.st.bigraphs</groupId>
+            <groupId>org.bigraphs.framework</groupId>
             <artifactId>bigraph-simulation</artifactId>
             <version>${bigraph-version}</version>
         </dependency>
         <dependency>
-            <groupId>de.tudresden.inf.st.bigraphs</groupId>
+            <groupId>org.bigraphs.framework</groupId>
             <artifactId>bigraph-visualization</artifactId>
             <version>${bigraph-version}</version>
         </dependency>
         <dependency>
-            <groupId>de.tudresden.inf.st.bigraphs</groupId>
+            <groupId>org.bigraphs.framework</groupId>
             <artifactId>bigraph-converter</artifactId>
             <version>${bigraph-version}</version>
         </dependency>
-        <dependency>
-            <groupId>de.tudresden.inf.st.bigraphs.dsl.interpreter</groupId>
-            <artifactId>bdsl-interpreter-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>de.tudresden.inf.st.bigraphs.dsl.interpreter</groupId>-->
+<!--            <artifactId>bdsl-interpreter-core</artifactId>-->
+<!--            <version>1.0.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.eclipse.platform</groupId>
@@ -135,14 +128,9 @@
             <version>3.6.4</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
+            <groupId>org.bigraphs.springframework.data</groupId>
             <artifactId>spring-data-cdo</artifactId>
             <version>${spring.data.cdo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.emf.cdo.common</groupId>
-            <artifactId>org.eclipse.emf.cdo.common</artifactId>
-            <version>4.20.0.v20221106-0628</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

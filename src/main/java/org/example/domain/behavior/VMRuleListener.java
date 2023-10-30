@@ -1,22 +1,22 @@
 package org.example.domain.behavior;
 
-import de.tudresden.inf.st.bigraphs.core.impl.pure.PureBigraph;
-import de.tudresden.inf.st.bigraphs.core.impl.pure.PureBigraphBuilder;
-import de.tudresden.inf.st.bigraphs.core.impl.signature.DefaultDynamicSignature;
-import de.tudresden.inf.st.bigraphs.core.utils.emf.EMFUtils;
-import de.tudresden.inf.st.bigraphs.dsl.bDSL.AbstractMainStatements;
-import de.tudresden.inf.st.bigraphs.models.bigraphBaseModel.BBigraph;
-import de.tudresden.inf.st.spring.data.cdo.CdoTemplate;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.CdoChangedObjectsActionDelegate;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.CdoNewObjectsActionDelegate;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.filter.FilterCriteria;
+import org.bigraphs.framework.core.impl.pure.PureBigraph;
+import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
+import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.utils.emf.EMFUtils;
+//import org.bigraphs.framework.dsl.bDSL.AbstractMainStatements;
+import org.bigraphs.model.bigraphBaseModel.BBigraph;
+import org.bigraphs.spring.data.cdo.CdoTemplate;
+import org.bigraphs.spring.data.cdo.core.listener.CdoChangedObjectsActionDelegate;
+import org.bigraphs.spring.data.cdo.core.listener.CdoNewObjectsActionDelegate;
+import org.bigraphs.spring.data.cdo.core.listener.filter.FilterCriteria;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.EcoreUtil2;
+//import org.eclipse.xtext.EcoreUtil2;
 import org.example.domain.VMSyntax;
 import org.example.repository.VMRepository;
 

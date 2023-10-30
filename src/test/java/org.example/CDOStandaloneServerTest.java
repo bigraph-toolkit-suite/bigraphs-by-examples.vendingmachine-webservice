@@ -1,6 +1,6 @@
 package org.example;
 
-import de.tudresden.inf.st.spring.data.cdo.CDOStandaloneServer;
+import org.bigraphs.spring.data.cdo.CDOStandaloneServer;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

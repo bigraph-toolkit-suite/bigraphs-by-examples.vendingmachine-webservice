@@ -1,6 +1,6 @@
 package org.example;
 
-import de.tudresden.inf.st.bigraphs.models.bigraphBaseModel.impl.BigraphBaseModelPackageImpl;
+import org.bigraphs.model.bigraphBaseModel.impl.BigraphBaseModelPackageImpl;
 import org.example.domain.VMSyntax;
 import org.example.domain.data.VendingMachineObject;
 import org.example.repository.VMRepository;

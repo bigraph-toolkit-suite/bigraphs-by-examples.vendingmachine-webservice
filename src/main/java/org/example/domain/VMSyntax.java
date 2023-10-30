@@ -1,14 +1,14 @@
 package org.example.domain;
 
-import de.tudresden.inf.st.bigraphs.core.datatypes.EMetaModelData;
-import de.tudresden.inf.st.bigraphs.core.impl.signature.DefaultDynamicSignature;
-import de.tudresden.inf.st.bigraphs.core.impl.signature.DynamicSignatureBuilder;
-import de.tudresden.inf.st.spring.data.cdo.CdoTemplate;
+import org.bigraphs.framework.core.datatypes.EMetaModelData;
+import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.impl.signature.DynamicSignatureBuilder;
+import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.ecore.EPackage;
 
-import static de.tudresden.inf.st.bigraphs.core.factory.BigraphFactory.createOrGetBigraphMetaModel;
-import static de.tudresden.inf.st.bigraphs.core.factory.BigraphFactory.pureSignatureBuilder;
+import static org.bigraphs.framework.core.factory.BigraphFactory.createOrGetBigraphMetaModel;
+import static org.bigraphs.framework.core.factory.BigraphFactory.pureSignatureBuilder;
 
 /**
  * The bigraphical signature of the vending machine system.
@@ -16,7 +16,7 @@ import static de.tudresden.inf.st.bigraphs.core.factory.BigraphFactory.pureSigna
  * @author Dominik Grzelak
  */
 public class VMSyntax {
-    public final static String NSURI = "de.tud.inf.st.bigraphs";
+    public final static String NSURI = "org.bigraphs";
     public final static EMetaModelData eMetaModelData = EMetaModelData.builder()
             .setName("vm").setNsPrefix("bigraphMetaModel").setNsUri(VMSyntax.NSURI).create();
     public final static EPackage BIGRAPH_META_MODEL;

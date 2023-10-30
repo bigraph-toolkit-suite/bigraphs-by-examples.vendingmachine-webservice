@@ -1,15 +1,15 @@
 package org.example.domain.behavior;
 
-import de.tudresden.inf.st.bigraphs.core.BigraphFileModelManagement;
-import de.tudresden.inf.st.bigraphs.core.exceptions.InvalidReactionRuleException;
-import de.tudresden.inf.st.bigraphs.core.impl.pure.PureBigraph;
-import de.tudresden.inf.st.bigraphs.core.impl.pure.PureBigraphBuilder;
-import de.tudresden.inf.st.bigraphs.core.reactivesystem.ParametricReactionRule;
-import de.tudresden.inf.st.bigraphs.core.reactivesystem.ReactionRule;
-import de.tudresden.inf.st.spring.data.cdo.CdoTemplate;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.DefaultCdoSessionListener;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.filter.CdoListenerFilter;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.filter.FilterCriteria;
+import org.bigraphs.framework.core.BigraphFileModelManagement;
+import org.bigraphs.framework.core.exceptions.InvalidReactionRuleException;
+import org.bigraphs.framework.core.impl.pure.PureBigraph;
+import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
+import org.bigraphs.framework.core.reactivesystem.ParametricReactionRule;
+import org.bigraphs.framework.core.reactivesystem.ReactionRule;
+import org.bigraphs.spring.data.cdo.CdoTemplate;
+import org.bigraphs.spring.data.cdo.core.listener.DefaultCdoSessionListener;
+import org.bigraphs.spring.data.cdo.core.listener.filter.CdoListenerFilter;
+import org.bigraphs.spring.data.cdo.core.listener.filter.FilterCriteria;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.net4j.util.event.IListener;

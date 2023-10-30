@@ -1,18 +1,18 @@
 package org.example.domain.data;
 
-import de.tudresden.inf.st.bigraphs.core.Bigraph;
-import de.tudresden.inf.st.bigraphs.core.exceptions.InvalidReactionRuleException;
-import de.tudresden.inf.st.bigraphs.core.impl.elementary.Placings;
-import de.tudresden.inf.st.bigraphs.core.impl.pure.PureBigraph;
-import de.tudresden.inf.st.bigraphs.core.impl.pure.PureBigraphBuilder;
-import de.tudresden.inf.st.bigraphs.core.impl.signature.DefaultDynamicSignature;
-import de.tudresden.inf.st.bigraphs.core.reactivesystem.ReactionRule;
-import de.tudresden.inf.st.bigraphs.models.bigraphBaseModel.BBigraph;
-import de.tudresden.inf.st.spring.data.cdo.CdoTemplate;
-import de.tudresden.inf.st.spring.data.cdo.annotation.CDO;
-import de.tudresden.inf.st.spring.data.cdo.annotation.EObjectModel;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.filter.CdoListenerFilter;
-import de.tudresden.inf.st.spring.data.cdo.core.listener.filter.FilterCriteria;
+import org.bigraphs.framework.core.Bigraph;
+import org.bigraphs.framework.core.exceptions.InvalidReactionRuleException;
+import org.bigraphs.framework.core.impl.elementary.Placings;
+import org.bigraphs.framework.core.impl.pure.PureBigraph;
+import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
+import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.reactivesystem.ReactionRule;
+import org.bigraphs.model.bigraphBaseModel.BBigraph;
+import org.bigraphs.spring.data.cdo.CdoTemplate;
+import org.bigraphs.spring.data.cdo.annotation.CDO;
+import org.bigraphs.spring.data.cdo.annotation.EObjectModel;
+import org.bigraphs.spring.data.cdo.core.listener.filter.CdoListenerFilter;
+import org.bigraphs.spring.data.cdo.core.listener.filter.FilterCriteria;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +27,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Map;
 
-import static de.tudresden.inf.st.bigraphs.core.factory.BigraphFactory.*;
+import static org.bigraphs.framework.core.factory.BigraphFactory.*;
 import static org.example.domain.VMSyntax.BIGRAPH_META_MODEL;
 import static org.example.domain.data.VendingMachineObject.REPOSITORY_PATH;
 

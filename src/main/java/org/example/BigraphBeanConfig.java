@@ -1,6 +1,6 @@
 package org.example;
 
-import de.tudresden.inf.st.spring.data.cdo.CdoTemplate;
+import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.example.domain.VMSyntax;
 import org.example.domain.behavior.VMRuleListener;
 import org.example.domain.behavior.VMRuleSet;
