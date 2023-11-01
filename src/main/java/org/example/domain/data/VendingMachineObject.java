@@ -1,12 +1,10 @@
 package org.example.domain.data;
 
 import org.bigraphs.framework.core.Bigraph;
-import org.bigraphs.framework.core.exceptions.InvalidReactionRuleException;
 import org.bigraphs.framework.core.impl.elementary.Placings;
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
 import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
 import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
-import org.bigraphs.framework.core.reactivesystem.ReactionRule;
 import org.bigraphs.model.bigraphBaseModel.BBigraph;
 import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.bigraphs.spring.data.cdo.annotation.CDO;
@@ -16,19 +14,14 @@ import org.bigraphs.spring.data.cdo.core.listener.filter.FilterCriteria;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.net4j.util.event.IListener;
 import org.example.domain.VMSyntax;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.annotation.Id;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.util.Map;
 
 import static org.bigraphs.framework.core.factory.BigraphFactory.*;
-import static org.example.domain.VMSyntax.BIGRAPH_META_MODEL;
 import static org.example.domain.data.VendingMachineObject.REPOSITORY_PATH;
 
 /**
