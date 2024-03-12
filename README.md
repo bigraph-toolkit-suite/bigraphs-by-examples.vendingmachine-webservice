@@ -11,13 +11,15 @@
   - At design-time: by changing the initial agent, rules and predicates loaded at startup within the folder `src/main/resources` 
 - Behavior of the application is model checked
   - Results of the analysis is used for the application
-- Theoretically, this application supports runtime monitoring of the specification in case the architecture is refactored in way that violates the original specification
+
+#### Interesting Future Work
+- Support runtime monitoring of the BRS specification in case the architecture is refactored in a way that violates the original specification
 
 #### Requirements
 
 - Java 17
 - Spring 2.7.5
-- Bigraph Framework 1.0.0-SNAPSHOT
+- Bigraph Framework 1.1.0
 - Spring Data CDO 0.6.0-SNAPSHOT
 
 **Optional**
@@ -54,6 +56,8 @@ To run the application JAR file, execute the following command:
 ```shell
 java -jar ./target/code-samples-1.0-SNAPSHOT.jar
 ```
+
+### Open the Browser
 
 Afterwards, open any browser and go to the following URL:
 ```
