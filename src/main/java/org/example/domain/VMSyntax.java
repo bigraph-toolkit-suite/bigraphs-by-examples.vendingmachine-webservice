@@ -46,15 +46,16 @@ public class VMSyntax {
 
     public void initPackageRepositories(CdoTemplate template) {
 
-        // (!) loading from FS prodces some errors later when storing in CDO because of some proxy issue or CDO bug
+        // (!) loading from FS produces some errors later when storing in CDO because of some proxy issue or CDO bug
         //java.lang.IllegalStateException: Unresolvable proxy
 //        String metaModelFilename = "metamodel/vm.ecore";
 //        EPackage bigraphMetaModel = BigraphArtifacts.loadBigraphMetaModel(ResourceLoader.getResourceURL(metaModelFilename).getPath());
 
         EPackage bigraphMetaModel = createOrGetBigraphMetaModel(sig(), eMetaModelData);
-        EPackage.Registry.INSTANCE.put(VMSyntax.NSURI, bigraphMetaModel);
-        CDOPackageRegistry.INSTANCE.put(VMSyntax.NSURI, bigraphMetaModel);
-        template.getCDOPackageRegistry().put(VMSyntax.NSURI, bigraphMetaModel);
+        String nsURI = bigraphMetaModel.getNsURI();
+        EPackage.Registry.INSTANCE.put(nsURI, bigraphMetaModel);
+        CDOPackageRegistry.INSTANCE.put(nsURI, bigraphMetaModel);
+        template.getCDOPackageRegistry().put(nsURI, bigraphMetaModel);
     }
 
     public EPackage getBigraphMetaModel() {

@@ -39,7 +39,7 @@ import static org.example.domain.data.VendingMachineObject.REPOSITORY_PATH;
 //nsUri must be the same value as when creating a bigraph by using "EMetaModelData"
 @CDO(nsUri = VMSyntax.NSURI, path = REPOSITORY_PATH, packageName = "vm")
 public class VendingMachineObject implements PropertyChangeListener {
-    public static final String REPOSITORY_PATH = "/system/agent";
+    public static final String REPOSITORY_PATH = "/system/agent/vm";
     public static final String BIGRAPH = "bigraph"; // variable name
     public static final String MODEL = "emodel"; // variable name
     public static final String ID = "cdoid"; // variable name
@@ -78,14 +78,6 @@ public class VendingMachineObject implements PropertyChangeListener {
 
     public VendingMachineObject() {
     }
-
-//    public VendingMachineObject(CdoTemplate template, PureBigraph bigraph, VMSyntax vmSyntax, VendingMachineListener vendingMachineListener) {
-//        this.vmSyntax = vmSyntax;
-//        this.bigraph = bigraph;
-//        this.eModel = bigraph.getModel();
-//        this.vendingMachineListener = vendingMachineListener;
-//        this.template = template;
-//    }
 
     public void init(PureBigraph bigraph) {
         this.bigraph = bigraph;

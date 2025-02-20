@@ -13,10 +13,11 @@ signature Sig {
 }
 
 main = {
-    println($student)
-    println($vendingMachine)
-    println($system)
-    // export($system, as=png, resourcePath="file:src/test/resources/dump/system.png")
+    //println($student)
+    //println($vendingMachine)
+    //println($system)
+    //println($teaIsEmpty)
+    export($system, as=png, resourcePath="file:src/test/resources/dump/system.png")
     brs example(Sig) = {
         agents = [$system],
         rules = [$insertCoin, $pushBtn1, $pushBtn2, $giveCoffee, $giveTea],
@@ -37,38 +38,8 @@ val system(Sig) = {
     $student | $vendingMachine
 }
 
-pred teaIsEmpty(Sig):partial = load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/teaEmpty.xmi")
-pred coffeeIsEmpty(Sig):partial = load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/coffeeEmpty.xmi")
-
-react insertCoin(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/insertCoinL.xmi")
-}, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/insertCoinR.xmi")
-}
-
-react pushBtn1(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/pushBtn1L.xmi")
-}, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/pushBtn1R.xmi")
-}
-
-react pushBtn2(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/pushBtn2L.xmi")
-}, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/pushBtn2R.xmi")
-}
-
-react giveCoffee(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/giveCoffeeL.xmi")
-}, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/giveCoffeeR.xmi")
-}
-
-react giveTea(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/giveTeaL.xmi")
-}, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/giveTeaR.xmi")
-}
+pred teaIsEmpty(Sig):partial = load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/predicates/teaEmpty.xmi")
+pred coffeeIsEmpty(Sig):partial = load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/predicates/coffeeEmpty.xmi")
 
 listenForPredicateMatch($example, [$teaIsEmpty]) = {
     println("Tea is empty. Notify the vendor for more.")
@@ -92,4 +63,34 @@ listenForRuleMatch($example , [$giveCoffee]) = {
 
 listenForRuleMatch($example , [$giveTea]) = {
     println("Give Tea")
+}
+
+react insertCoin(Sig) = {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/insertCoinL.xmi")
+}, {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/insertCoinR.xmi")
+}
+
+react pushBtn1(Sig) = {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/pushBtn1L.xmi")
+}, {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/pushBtn1R.xmi")
+}
+
+react pushBtn2(Sig) = {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/pushBtn2L.xmi")
+}, {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/pushBtn2R.xmi")
+}
+
+react giveCoffee(Sig) = {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/giveCoffeeL.xmi")
+}, {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/giveCoffeeR.xmi")
+}
+
+react giveTea(Sig) = {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/giveTeaL.xmi")
+}, {
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/giveTeaR.xmi")
 }

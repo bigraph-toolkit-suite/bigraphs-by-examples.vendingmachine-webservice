@@ -1,5 +1,6 @@
 package org.example;
 
+import jakarta.annotation.PostConstruct;
 import org.bigraphs.spring.data.cdo.CdoServerConnectionString;
 import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.bigraphs.spring.data.cdo.SimpleCdoDbFactory;
@@ -16,7 +17,7 @@ import org.springframework.data.mapping.context.MappingContextEvent;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.ClassUtils;
 
-import javax.annotation.PostConstruct;
+//import javax.annotation.PostConstruct;
 
 /**
  * Configuration class for the CDO server and repository.

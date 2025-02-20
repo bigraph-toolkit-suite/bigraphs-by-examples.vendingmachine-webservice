@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+//import org.thymeleaf.spring5.SpringTemplateEngine;
 
 
 /**
@@ -19,6 +20,9 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @Import(value = {AppConfig.class, CDOServerConfig.class, BigraphBeanConfig.class})
 public class Application implements CommandLineRunner {
+
+//    @Autowired
+//    private SpringTemplateEngine templateEngine;
 
     public static void main(String[] args) {
         BigraphBaseModelPackageImpl.init();

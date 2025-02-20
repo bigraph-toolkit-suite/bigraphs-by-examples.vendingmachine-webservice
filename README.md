@@ -18,9 +18,11 @@
 #### Requirements
 
 - Java 17
+- Maven 3.8.7
 - Spring 2.7.5
-- Bigraph Framework 1.1.0
-- Spring Data CDO 0.6.0-SNAPSHOT
+- Bigraph Framework 2.0.1
+- BDSL 2.0.1
+- CDO for Spring Data 0.7.2
 
 **Optional**
 - CDO Explorer: to view and modify the bigraph in the database 
@@ -56,6 +58,8 @@ To run the application JAR file, execute the following command:
 ```shell
 java -jar ./target/code-samples-1.0-SNAPSHOT.jar
 ```
+
+(Ignore warnings in the console.)
 
 ### Open the Browser
 

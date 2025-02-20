@@ -2,16 +2,20 @@ package org.example.domain.behavior;
 
 import org.bigraphs.framework.core.BigraphFileModelManagement;
 import org.bigraphs.framework.core.exceptions.InvalidReactionRuleException;
+import org.bigraphs.framework.core.factory.BigraphFactory;
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
 import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
+import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
 import org.bigraphs.framework.core.reactivesystem.ParametricReactionRule;
 import org.bigraphs.framework.core.reactivesystem.ReactionRule;
+import org.bigraphs.framework.core.utils.BigraphUtil;
 import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.bigraphs.spring.data.cdo.core.listener.DefaultCdoSessionListener;
 import org.bigraphs.spring.data.cdo.core.listener.filter.CdoListenerFilter;
 import org.bigraphs.spring.data.cdo.core.listener.filter.FilterCriteria;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.net4j.util.event.IListener;
 import org.example.domain.VMSyntax;
 import org.example.service.ResourceLoader;
@@ -21,6 +25,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -100,19 +105,21 @@ public class VMRuleSet implements PropertyChangeListener {
     private void loadRulesFromFileSystem() throws IOException, InvalidReactionRuleException {
         String prefixPath = "models/rules/";
         String suffixPath = ".xmi";
-
-        DefaultResourceLoader defaultResourceLoader = new DefaultResourceLoader();
+        DefaultDynamicSignature sig = vmSyntax.sig();
+        EPackage mm = BigraphFactory.createOrGetBigraphMetaModel(sig);
         for (String eachRuleName : ruleNames) {
 //            URL ruleLeft = ResourceLoader.getResourceURL(prefixPath + eachRuleName + "L" + suffixPath);
 //            URL ruleRight = ResourceLoader.getResourceURL(prefixPath + eachRuleName + "R" + suffixPath);
-            InputStream ruleLeft = ResourceLoader.getResourceStream(prefixPath + eachRuleName + "L" + suffixPath);
-            InputStream ruleRight = ResourceLoader.getResourceStream(prefixPath + eachRuleName + "R" + suffixPath);
+            InputStream rsLeft = ResourceLoader.getResourceStream(prefixPath + eachRuleName + "L" + suffixPath);
+            InputStream rsRight = ResourceLoader.getResourceStream(prefixPath + eachRuleName + "R" + suffixPath);
 
+            List<EObject> eObjects = BigraphFileModelManagement.Load.bigraphInstanceModel(mm, rsLeft);
+            List<EObject> eObjects1 = BigraphFileModelManagement.Load.bigraphInstanceModel(mm, rsRight);
 
-            List<EObject> eObjects = BigraphFileModelManagement.Load.bigraphInstanceModel(vmSyntax.getBigraphMetaModel(), ruleLeft);
-            List<EObject> eObjects1 = BigraphFileModelManagement.Load.bigraphInstanceModel(vmSyntax.getBigraphMetaModel(), ruleRight);
-            PureBigraph left = PureBigraphBuilder.create(vmSyntax.sig(), vmSyntax.getBigraphMetaModel(), eObjects.get(0)).createBigraph();
-            PureBigraph right = PureBigraphBuilder.create(vmSyntax.sig(), vmSyntax.getBigraphMetaModel(), eObjects1.get(0)).createBigraph();
+//            List<EObject> eObjects = BigraphFileModelManagement.Load.bigraphInstanceModel(ruleLeft.getPath());
+//            List<EObject> eObjects1 = BigraphFileModelManagement.Load.bigraphInstanceModel(ruleRight.getPath());
+            PureBigraph left = BigraphUtil.toBigraph(eObjects.get(0).eClass().getEPackage(), eObjects.get(0), sig);
+            PureBigraph right = BigraphUtil.toBigraph(eObjects1.get(0).eClass().getEPackage(), eObjects1.get(0), sig);
             ParametricReactionRule<PureBigraph> reactionRule = new ParametricReactionRule<>(left, right);
             ruleMap.put(eachRuleName, reactionRule);
         }

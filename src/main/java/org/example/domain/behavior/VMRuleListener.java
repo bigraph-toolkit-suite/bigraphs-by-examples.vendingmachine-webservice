@@ -55,10 +55,10 @@ public class VMRuleListener implements CdoNewObjectsActionDelegate {
 
     @Override
     public void perform(List<CDOIDAndVersion> arg, Map<String, Object> properties) {
-        if (arg.size() == 0) return;
+        if (arg.isEmpty()) return;
         System.out.println("New objects received: " + arg);
 
-        if (properties == null || properties.size() == 0) return;
+        if (properties == null || properties.isEmpty()) return;
         System.out.println("From repoPath: " + properties.get(FilterCriteria.Key.REPOSITORY_PATH));
         String actualRepoPath = (String) properties.get(FilterCriteria.Key.REPOSITORY_PATH);
         if (actualRepoPath == null || !actualRepoPath.contains("rules")) {

@@ -4,6 +4,7 @@ package org.example.domain.data;
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
 import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
 import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.utils.BigraphUtil;
 import org.bigraphs.framework.core.utils.emf.EMFUtils;
 import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.bigraphs.spring.data.cdo.core.listener.CdoNewObjectsActionDelegate;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.bigraphs.framework.core.utils.BigraphUtil.toBigraph;
+
 /**
  * CDO listener for the vending machine object, i.e., the agent of the VM system.
  *
@@ -30,7 +33,7 @@ import java.util.Optional;
 public class VendingMachineListener implements CdoNewObjectsActionDelegate {
 
     CdoTemplate template;
-//    VMRepository repository;
+    //    VMRepository repository;
     VMSyntax vmSyntax;
 
     private final List<PropertyChangeListener> listener = new ArrayList<>();
@@ -62,7 +65,7 @@ public class VendingMachineListener implements CdoNewObjectsActionDelegate {
 
     @Override
     public void perform(List<CDOIDAndVersion> arg, Map<String, Object> properties) {
-        if (arg.size() == 0) return;
+        if (arg.isEmpty()) return;
         System.out.println("New objects received: " + arg);
 
         if (properties == null || properties.size() == 0) return;
@@ -85,8 +88,7 @@ public class VendingMachineListener implements CdoNewObjectsActionDelegate {
                 // (!) no copy otherwise CDOID gets lost - we need to remain a connection to CDO
 //                EObject copy = EcoreUtil.copy(EMFUtils.getRootContainer(anotherInstance));
                 EObject copy = (EMFUtils.getRootContainer(anotherInstance));
-                PureBigraphBuilder<DefaultDynamicSignature> b = PureBigraphBuilder.create(vmSyntax.sig(), vmSyntax.getBigraphMetaModel(), copy);
-                PureBigraph tmp = b.createBigraph();
+                PureBigraph tmp = BigraphUtil.toBigraph(copy.eClass().getEPackage(), copy, vmSyntax.sig());
                 notifyListeners(VendingMachineObject.ID, null, CDOUtil.getCDOObject(copy).cdoID());
                 notifyListeners(VendingMachineObject.BIGRAPH, null, tmp);
                 System.out.println("\tPureBigraph in Listener: " + tmp + " with CDOID: " + cdoidAndVersion.getID() + "/ " + CDOUtil.getCDOObject(anotherInstance).cdoID());

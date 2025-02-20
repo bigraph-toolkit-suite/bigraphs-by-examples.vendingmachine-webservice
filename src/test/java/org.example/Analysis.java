@@ -1,32 +1,49 @@
 package org.example;
 
+import com.google.inject.Inject;
+import lombok.experimental.ExtensionMethod;
 import org.bigraphs.dsl.bDSL.BDSLDocument;
 import org.bigraphs.dsl.interpreter.BdslStatementInterpreterResult;
 import org.bigraphs.dsl.interpreter.InterpreterServiceManager;
 import org.bigraphs.dsl.interpreter.ParserService;
 import org.bigraphs.dsl.interpreter.expressions.main.MainBlockEvalVisitorImpl;
 import org.bigraphs.dsl.interpreter.expressions.main.MainStatementEvalVisitorImpl;
+import org.bigraphs.dsl.interpreter.extensions.main.MainBlockVisitableExtension;
+import org.bigraphs.dsl.interpreter.extensions.variables.BigraphExpressionVisitableExtension;
+import org.bigraphs.dsl.scoping.BDSLImportedNamespaceAwareLocalScopeProvider;
 import org.bigraphs.framework.core.BigraphFileModelManagement;
+import org.bigraphs.framework.core.exceptions.InvalidReactionRuleException;
+import org.bigraphs.framework.core.factory.BigraphFactory;
 import org.bigraphs.framework.core.impl.BigraphEntity;
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
 import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
 import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.reactivesystem.ParametricReactionRule;
 import org.bigraphs.framework.core.reactivesystem.ReactionGraph;
+import org.bigraphs.framework.core.reactivesystem.ReactionRule;
+import org.bigraphs.framework.core.utils.BigraphUtil;
 import org.bigraphs.framework.simulation.modelchecking.ModelCheckingOptions;
 import org.bigraphs.framework.simulation.modelchecking.PureBigraphModelChecker;
+import org.bigraphs.framework.visualization.BigraphGraphvizExporter;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.testing.extensions.InjectionExtension;
 import org.example.domain.VMSyntax;
+import org.example.domain.behavior.VMReactiveSystem;
+import org.example.domain.behavior.VMRuleSet;
+import org.example.domain.data.VendingMachineObject;
+import org.example.service.ResourceLoader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.core.io.DefaultResourceLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.bigraphs.framework.simulation.modelchecking.ModelCheckingOptions.exportOpts;
 import static org.bigraphs.framework.simulation.modelchecking.ModelCheckingOptions.transitionOpts;
@@ -36,7 +53,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * @author Dominik Grzelak
  */
-@ExtendWith(InjectionExtension.class)
+//@ExtendWith(InjectionExtension.class)
+@ExtensionMethod({BigraphExpressionVisitableExtension.class, MainBlockVisitableExtension.class})
 public class Analysis extends AbstractTestSupport {
 
     // Bigraph Metamodel of the Vending Machine - required for all agents, rules and predicates later
@@ -48,25 +66,67 @@ public class Analysis extends AbstractTestSupport {
                 Paths.get("src/test/resources/vending-machine/metamodel/"));
     }
 
+    @Test
+    void test_insertCoinRule_execute() throws InvalidReactionRuleException, IOException {
+        String prefixPath = "vending-machine/rules/";
+        String suffixPath = ".xmi";
+        List<String> ruleNames = List.of("insertCoin");
+
+        VMSyntax vmSyntax = new VMSyntax();
+        DefaultDynamicSignature sig = vmSyntax.sig();
+        EPackage bMM = BigraphFileModelManagement.Load.bigraphMetaModel(ResourceLoader.getResourceURL("vending-machine/metamodel/vm.ecore").getFile(), false);
+//         EPackage bMM = BigraphFactory.createOrGetBigraphMetaModel(sig, VMSyntax.eMetaModelData);
+
+        VMReactiveSystem system = new VMReactiveSystem();
+        HashMap<String, ReactionRule<PureBigraph>> ruleMap = new LinkedHashMap<>();
+
+        for (String eachRuleName : ruleNames) {
+            URL ruleLeft = ResourceLoader.getResourceURL(prefixPath + eachRuleName + "L" + suffixPath);
+            URL ruleRight = ResourceLoader.getResourceURL(prefixPath + eachRuleName + "R" + suffixPath);
+//            InputStream ruleLeft = ResourceLoader.getResourceStream(prefixPath + eachRuleName + "L" + suffixPath);
+//            InputStream ruleRight = ResourceLoader.getResourceStream(prefixPath + eachRuleName + "R" + suffixPath);
+
+            List<EObject> eObjects = BigraphFileModelManagement.Load.bigraphInstanceModel(ruleLeft.getFile());
+            List<EObject> eObjects1 = BigraphFileModelManagement.Load.bigraphInstanceModel(ruleRight.getFile());
+            PureBigraph left = BigraphUtil.toBigraph(eObjects.get(0).eClass().getEPackage(), eObjects.get(0), sig);
+            PureBigraph right = BigraphUtil.toBigraph(eObjects1.get(0).eClass().getEPackage(), eObjects1.get(0), sig);
+            ParametricReactionRule<PureBigraph> reactionRule = new ParametricReactionRule<>(left, right);
+            ruleMap.put(eachRuleName, reactionRule);
+        }
+
+        PureBigraph agent = VendingMachineObject.createAgent(2, 2, 2, vmSyntax);
+        system.setAgent(agent);
+        system.addReactionRule(ruleMap.get("insertCoin"));
+        PureBigraph updatedModel = system.executeSingleRule();
+        system.setAgent(updatedModel);
+        updatedModel = system.executeSingleRule();
+        BigraphGraphvizExporter.toPNG(updatedModel, true, new File("updatedModel.png"));
+        BigraphGraphvizExporter.toPNG(system.getReactionRulesMap().get("r0").getRedex(), true, new File("updatedModel_LHS.png"));
+        BigraphGraphvizExporter.toPNG(system.getReactionRulesMap().get("r0").getReactum(), true, new File("updatedModel_RHS.png"));
+    }
+
     // Transition Graph : State Space Analysis
 
     @Test
     void explore_system_states() throws Exception {
         InputStream is = getResourceAsStream("vending-machine/script/vendingmachine.bdsl");
         ParserService parser = InterpreterServiceManager.parser();
-
         BDSLDocument parse = parser.parse(is);
+        parser.validate(parse);
+
         MainBlockEvalVisitorImpl mainEvalVisitor = new MainBlockEvalVisitorImpl(
                 new MainStatementEvalVisitorImpl()
         );
 
-        List<BdslStatementInterpreterResult> output = mainEvalVisitor.beginVisit(parse.getMain());
+        List<BdslStatementInterpreterResult> output = parse.getMain().interpret(mainEvalVisitor);
         Iterator<BdslStatementInterpreterResult> iterator = output.iterator();
         while (iterator.hasNext()) {
             BdslStatementInterpreterResult next = iterator.next();
             Optional<Object> call = next.getBdslExecutableStatement().call();
             if (call.isPresent()) {
-                assertNotNull(call.get());
+                System.out.println(call);
+                Object o = call.get();
+                assertNotNull(o);
             }
         }
     }
@@ -102,7 +162,7 @@ public class Analysis extends AbstractTestSupport {
         builder2.createRoot()
                 .addChild("PHD").down().addChild("Wallet").down().addSite()
                 .top()
-                .addChild("VM").down().addSite().addChild("Button1").addChild("Button2").addChild("Coin");
+                .addChild("VM").down().addSite().addChild("Button1").addChild("Button2").addChild("Coin")
         ;
         PureBigraph redex = builder.createBigraph();
         PureBigraph reactum = builder2.createBigraph();
@@ -273,7 +333,7 @@ public class Analysis extends AbstractTestSupport {
     }
 
 
-    /////////////////////////////////////////////////////////////////////
+    /// //////////////////////////////////////////////////////////////////
 
     @Test
     void createRules_refillTea() throws IOException {

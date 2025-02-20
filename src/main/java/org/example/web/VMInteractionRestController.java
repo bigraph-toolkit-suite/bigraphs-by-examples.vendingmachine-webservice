@@ -219,7 +219,7 @@ public class VMInteractionRestController {
         try {
             File png = File.createTempFile("vm-current-agent", "");
             BigraphGraphvizExporter.toPNG(vendingMachineObject.bigraph, true, png);
-            byte[] content = Files.readAllBytes(Paths.get(png.toPath().toString() + ".png"));
+            byte[] content = Files.readAllBytes(Paths.get(png.toPath().toString()));
             String encodedString = Base64.getEncoder().encodeToString(content);
             return ResponseEntity.ok().body(ResponseData.create("OK!", encodedString));
         } catch (IOException e) {
