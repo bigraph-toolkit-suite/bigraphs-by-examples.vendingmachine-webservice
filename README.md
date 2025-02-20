@@ -22,7 +22,7 @@
 - Spring 2.7.5
 - Bigraph Framework 2.0.1
 - BDSL 2.0.1
-- CDO for Spring Data 0.7.2
+- CDO for Spring Data 0.7.3
 
 **Optional**
 - CDO Explorer: to view and modify the bigraph in the database 
