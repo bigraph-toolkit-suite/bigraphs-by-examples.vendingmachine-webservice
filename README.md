@@ -1,4 +1,4 @@
-# Bigraphs by Examples: A Bigraphical Vending Machine as a Webservice Application
+# Bigraphs by Examples: A RESTful Vending Machine
 
 #### Features
 
