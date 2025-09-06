@@ -30,7 +30,7 @@ import org.springframework.util.ClassUtils;
 @Configuration
 @AutoConfigureOrder(2)
 @EnableCdoRepositories(basePackageClasses = VMRepository.class)
-//@EnableCdoRepositories(basePackages = "org.example.repository")
+//@EnableCdoRepositories(basePackages = "org.example.repository") // alternative configuration by package name
 @EnableAsync
 public class CDOServerConfig implements ApplicationListener<ApplicationEvent> {
     final CDOServerService serverService;

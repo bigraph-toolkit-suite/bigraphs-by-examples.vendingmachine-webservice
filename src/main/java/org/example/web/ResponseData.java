@@ -1,5 +1,8 @@
 package org.example.web;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * A response data object returned by some REST endpoints.
  * <p>
@@ -7,6 +10,8 @@ package org.example.web;
  *
  * @author Dominik Grzelak
  */
+@Setter
+@Getter
 public class ResponseData {
 
     public static ResponseData create(String message) {
@@ -28,19 +33,4 @@ public class ResponseData {
         this.bigraphImage = bigraphImage;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getBigraphImage() {
-        return bigraphImage;
-    }
-
-    public void setBigraphImage(String bigraphImage) {
-        this.bigraphImage = bigraphImage;
-    }
 }

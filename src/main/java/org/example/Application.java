@@ -9,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
-//import org.thymeleaf.spring5.SpringTemplateEngine;
 
 
 /**
@@ -20,9 +19,6 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @Import(value = {AppConfig.class, CDOServerConfig.class, BigraphBeanConfig.class})
 public class Application implements CommandLineRunner {
-
-//    @Autowired
-//    private SpringTemplateEngine templateEngine;
 
     public static void main(String[] args) {
         BigraphBaseModelPackageImpl.init();
@@ -40,10 +36,14 @@ public class Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Creating initial agent and storing the vending machine in Eclipse CDO ...");
         vendingMachineObject.init(VendingMachineObject.createAgent(2, 2, 2, vmSyntax));
-        // Wait a little bit for a gracefully start ...
+
+        // Wait a little bit for a graceful start ...
         Thread.sleep(2500);
-//        cdoTemplate.remove(ruleSet.getRuleMap().get("giveCoffee").getRedex().getModel(), "/system/rules/giveCoffee/L");
-//        cdoTemplate.insert(ruleSet.getRuleMap().get("giveCoffee").getRedex().getModel(), "system/rules/giveCoffee/L");
-//        System.out.println("Application has successfully started ...");
+
+        // Exemplary CDO Operations
+        // cdoTemplate.remove(ruleSet.getRuleMap().get("giveCoffee").getRedex().getModel(), "/system/rules/giveCoffee/L");
+        // cdoTemplate.insert(ruleSet.getRuleMap().get("giveCoffee").getRedex().getModel(), "system/rules/giveCoffee/L");
+
+        System.out.println("Application has successfully started ...");
     }
 }

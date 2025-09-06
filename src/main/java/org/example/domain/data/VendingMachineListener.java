@@ -3,7 +3,7 @@ package org.example.domain.data;
 
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
 import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
-import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.impl.signature.DynamicSignature;
 import org.bigraphs.framework.core.utils.BigraphUtil;
 import org.bigraphs.framework.core.utils.emf.EMFUtils;
 import org.bigraphs.spring.data.cdo.CdoTemplate;

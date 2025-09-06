@@ -34,7 +34,7 @@ public class BigraphBeanConfig {
     @Scope("singleton")
     public VMSyntax vmSyntax(CdoTemplate cdoTemplate) {
         VMSyntax vmSyntax = new VMSyntax();
-//        cdoTemplate.removeAll("/system");
+//        cdoTemplate.removeAll("/system"); // for a really clean start
         vmSyntax.initPackageRepositories(cdoTemplate);
         return vmSyntax;
     }

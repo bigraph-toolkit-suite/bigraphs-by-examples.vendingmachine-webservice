@@ -1,7 +1,7 @@
 package org.example.domain;
 
 import org.bigraphs.framework.core.datatypes.EMetaModelData;
-import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.impl.signature.DynamicSignature;
 import org.bigraphs.framework.core.impl.signature.DynamicSignatureBuilder;
 import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -26,20 +26,20 @@ public class VMSyntax {
         BIGRAPH_META_MODEL = ePackage;
     }
 
-    public DefaultDynamicSignature sig() {
+    public DynamicSignature sig() {
         DynamicSignatureBuilder sb = pureSignatureBuilder();
-        DefaultDynamicSignature sig = sb
-                .addControl("Coin", 0)
-                .addControl("VM", 0)
-                .addControl("Button1", 0)
-                .addControl("Button2", 0)
-                .addControl("Pressed", 0)
-                .addControl("Coffee", 0)
-                .addControl("Container", 0)
-                .addControl("Tea", 0)
-                .addControl("PHD", 0)
-                .addControl("Wallet", 0)
-                .addControl("Tresor", 0)
+        DynamicSignature sig = sb
+                .add("Coin", 0)
+                .add("VM", 0)
+                .add("Button1", 0)
+                .add("Button2", 0)
+                .add("Pressed", 0)
+                .add("Coffee", 0)
+                .add("Container", 0)
+                .add("Tea", 0)
+                .add("PHD", 0)
+                .add("Wallet", 0)
+                .add("Tresor", 0)
                 .create();
         return sig;
     }

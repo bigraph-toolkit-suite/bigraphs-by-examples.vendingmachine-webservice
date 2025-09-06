@@ -4,7 +4,7 @@ import org.bigraphs.framework.core.Bigraph;
 import org.bigraphs.framework.core.impl.elementary.Placings;
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
 import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
-import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.impl.signature.DynamicSignature;
 import org.bigraphs.model.bigraphBaseModel.BBigraph;
 import org.bigraphs.spring.data.cdo.CdoTemplate;
 import org.bigraphs.spring.data.cdo.annotation.CDO;
@@ -110,44 +110,44 @@ public class VendingMachineObject implements PropertyChangeListener {
      * @return a pure bigraph representing the entire vending machine system
      * @throws Exception
      */
-    static PureBigraph agent(int numOfCoffee, int numOfTea, int numOfCoinsPhd, DefaultDynamicSignature sig)
+    static PureBigraph agent(int numOfCoffee, int numOfTea, int numOfCoinsPhd, DynamicSignature sig)
             throws Exception {
-        PureBigraphBuilder<DefaultDynamicSignature> vmB = pureBuilder(sig);
-        PureBigraphBuilder<DefaultDynamicSignature> phdB = pureBuilder(sig);
+        PureBigraphBuilder<DynamicSignature> vmB = pureBuilder(sig);
+        PureBigraphBuilder<DynamicSignature> phdB = pureBuilder(sig);
 
-        PureBigraphBuilder<DefaultDynamicSignature>.Hierarchy containerCoffee = vmB.hierarchy("Container");
+        PureBigraphBuilder<DynamicSignature>.Hierarchy containerCoffee = vmB.hierarchy("Container");
         for (int i = 0; i < numOfCoffee; i++) {
-            containerCoffee = containerCoffee.addChild("Coffee");
+            containerCoffee = containerCoffee.child("Coffee");
         }
-        PureBigraphBuilder<DefaultDynamicSignature>.Hierarchy containerTea = vmB.hierarchy("Container");
+        PureBigraphBuilder<DynamicSignature>.Hierarchy containerTea = vmB.hierarchy("Container");
         for (int i = 0; i < numOfTea; i++) {
-            containerTea = containerTea.addChild("Tea");
+            containerTea = containerTea.child("Tea");
         }
-        vmB.createRoot()
-                .addChild("VM")
+        vmB.root()
+                .child("VM")
                 .down()
-                .addChild(containerCoffee.top())
-                .addChild(containerTea.top())
-                .addChild("Button1")
-                .addChild("Button2")
-                .addChild("Tresor")
+                .child(containerCoffee.top())
+                .child(containerTea.top())
+                .child("Button1")
+                .child("Button2")
+                .child("Tresor")
         ;
 
-        PureBigraphBuilder<DefaultDynamicSignature>.Hierarchy wallet = vmB.hierarchy("Wallet");
+        PureBigraphBuilder<DynamicSignature>.Hierarchy wallet = vmB.hierarchy("Wallet");
         for (int i = 0; i < numOfCoinsPhd; i++) {
-            wallet = wallet.addChild("Coin");
+            wallet = wallet.child("Coin");
         }
-        phdB.createRoot().addChild("PHD")
+        phdB.root().child("PHD")
                 .down()
-                .addChild(wallet.top());
+                .child(wallet.top());
 
 
-        Placings<DefaultDynamicSignature> placings = purePlacings(sig);
-        Placings<DefaultDynamicSignature>.Merge merge2 = placings.merge(2);
-        PureBigraph vm = vmB.createBigraph();
-        PureBigraph phd = phdB.createBigraph();
-        Bigraph<DefaultDynamicSignature> both = ops(vm).parallelProduct(phd).getOuterBigraph();
-        Bigraph<DefaultDynamicSignature> result = ops(merge2).compose(both).getOuterBigraph();
+        Placings<DynamicSignature> placings = purePlacings(sig);
+        Placings<DynamicSignature>.Merge merge2 = placings.merge(2);
+        PureBigraph vm = vmB.create();
+        PureBigraph phd = phdB.create();
+        Bigraph<DynamicSignature> both = ops(vm).parallelProduct(phd).getOuterBigraph();
+        Bigraph<DynamicSignature> result = ops(merge2).compose(both).getOuterBigraph();
         return (PureBigraph) result;
     }
 

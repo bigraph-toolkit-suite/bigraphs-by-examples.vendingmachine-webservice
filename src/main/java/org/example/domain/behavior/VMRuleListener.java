@@ -2,7 +2,7 @@ package org.example.domain.behavior;
 
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
 import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
-import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.impl.signature.DynamicSignature;
 import org.bigraphs.framework.core.utils.emf.EMFUtils;
 //import org.bigraphs.framework.dsl.bDSL.AbstractMainStatements;
 import org.bigraphs.model.bigraphBaseModel.BBigraph;
@@ -72,8 +72,8 @@ public class VMRuleListener implements CdoNewObjectsActionDelegate {
             // (!) no copy otherwise CDOID gets lost - we need to remain a connection to CDO
 //            EObject containerOfType = EcoreUtil.copy(EMFUtils.getRootContainer(bBigraph));
             EObject containerOfType = (EMFUtils.getRootContainer(bBigraph));
-            PureBigraphBuilder<DefaultDynamicSignature> b = PureBigraphBuilder.create(vmSyntax.sig(), vmSyntax.getBigraphMetaModel(), containerOfType);
-            PureBigraph tmp = b.createBigraph();
+            PureBigraphBuilder<DynamicSignature> b = PureBigraphBuilder.create(vmSyntax.sig(), vmSyntax.getBigraphMetaModel(), containerOfType);
+            PureBigraph tmp = b.create();
             notifyListeners(actualRepoPath, null, tmp);
         }
     }

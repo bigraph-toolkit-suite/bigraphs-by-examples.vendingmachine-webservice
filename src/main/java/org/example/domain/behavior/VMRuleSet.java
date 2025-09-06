@@ -4,28 +4,23 @@ import org.bigraphs.framework.core.BigraphFileModelManagement;
 import org.bigraphs.framework.core.exceptions.InvalidReactionRuleException;
 import org.bigraphs.framework.core.factory.BigraphFactory;
 import org.bigraphs.framework.core.impl.pure.PureBigraph;
-import org.bigraphs.framework.core.impl.pure.PureBigraphBuilder;
-import org.bigraphs.framework.core.impl.signature.DefaultDynamicSignature;
+import org.bigraphs.framework.core.impl.signature.DynamicSignature;
 import org.bigraphs.framework.core.reactivesystem.ParametricReactionRule;
 import org.bigraphs.framework.core.reactivesystem.ReactionRule;
 import org.bigraphs.framework.core.utils.BigraphUtil;
 import org.bigraphs.spring.data.cdo.CdoTemplate;
-import org.bigraphs.spring.data.cdo.core.listener.DefaultCdoSessionListener;
 import org.bigraphs.spring.data.cdo.core.listener.filter.CdoListenerFilter;
 import org.bigraphs.spring.data.cdo.core.listener.filter.FilterCriteria;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.net4j.util.event.IListener;
 import org.example.domain.VMSyntax;
 import org.example.service.ResourceLoader;
-import org.springframework.core.io.DefaultResourceLoader;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -105,7 +100,7 @@ public class VMRuleSet implements PropertyChangeListener {
     private void loadRulesFromFileSystem() throws IOException, InvalidReactionRuleException {
         String prefixPath = "models/rules/";
         String suffixPath = ".xmi";
-        DefaultDynamicSignature sig = vmSyntax.sig();
+        DynamicSignature sig = vmSyntax.sig();
         EPackage mm = BigraphFactory.createOrGetBigraphMetaModel(sig);
         for (String eachRuleName : ruleNames) {
 //            URL ruleLeft = ResourceLoader.getResourceURL(prefixPath + eachRuleName + "L" + suffixPath);

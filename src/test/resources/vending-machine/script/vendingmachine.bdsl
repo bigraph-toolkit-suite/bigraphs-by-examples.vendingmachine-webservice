@@ -13,9 +13,9 @@ signature Sig {
 }
 
 main = {
-    //println($student)
-    //println($vendingMachine)
-    //println($system)
+    println($student)
+    println($vendingMachine)
+    println($system)
     //println($teaIsEmpty)
     export($system, as=png, resourcePath="file:src/test/resources/dump/system.png")
     brs example(Sig) = {

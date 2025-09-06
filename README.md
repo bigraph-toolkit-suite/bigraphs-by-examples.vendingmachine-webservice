@@ -2,7 +2,7 @@
 
 #### Features
 
-- A project template for similar projects
+- A project template for "database-driven object-oriented bigraphs"
   - Suitable to abstract from and build some code generation around 
 - Application data and logic is stored fully within a database as bigraphs
 - Bigraphical reactions are initiated by REST requests
@@ -17,12 +17,12 @@
 
 #### Requirements
 
-- Java 17
+- Java >=17
 - Maven 3.8.7
-- Spring 2.7.5
-- Bigraph Framework 2.0.1
+- Spring 3.3.5
+- Bigraph Framework 2.2.0
 - BDSL 2.0.1
-- CDO for Spring Data 0.7.3
+- CDO for Spring Data 0.7.5
 
 **Optional**
 - CDO Explorer: to view and modify the bigraph in the database 
@@ -45,25 +45,27 @@
 ### Via the IDE (Eclipse or IntelliJ IDEA)
 
 - Run the class `src/main/java/org/example/Application.java`
+- Wait until you see in the terminal: "Application has successfully started ..."
 
 ### Via the Terminal
 Using Maven, issue the following command:
 ```shell
-mvn clean package -DskipTests
+$ mvn clean package -DskipTests
 ```
 
 The JAR file is created within the `target` folder of the project's root folder.
 
 To run the application JAR file, execute the following command:
 ```shell
-java -jar ./target/code-samples-1.0-SNAPSHOT.jar
+$ java -jar ./target/code-samples-1.0-SNAPSHOT.jar
 ```
 
-(Ignore warnings in the console.)
+- Wait until you see in the terminal: "Application has successfully started ..."
+
 
 ### Open the Browser
 
-Afterwards, open any browser and go to the following URL:
+Afterward, open any browser and go to the following URL:
 ```
 http://localhost:8080/
 ```

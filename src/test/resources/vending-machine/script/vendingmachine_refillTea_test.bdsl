@@ -58,21 +58,21 @@ val vendingMachine3(Sig): VM = {
 
 // One container already contains tea
 react refillTea(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/refillTeaL.xmi")
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/refillTeaL.xmi")
 }, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/refillTeaR.xmi")
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/refillTeaR.xmi")
 }
 
 // One container is empty, and one contains already coffee
 react refillTea2(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/refillTea2L.xmi")
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/refillTea2L.xmi")
 }, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/refillTea2L.xmi")
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/refillTea2L.xmi")
 }
 
 // Both containers are empty -> choose any
 react refillTea3(Sig) = {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/refillTea3L.xmi")
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/refillTea3L.xmi")
 }, {
-    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/bigraphs/refillTea3L.xmi")
+    load(sig=Sig, as=xmi, resourcePath="classpath:vending-machine/rules/refillTea3L.xmi")
 }
