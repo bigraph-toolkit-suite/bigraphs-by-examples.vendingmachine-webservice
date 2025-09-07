@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bigraphMetaModel:BBigraph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bigraphMetaModel="org.bigraphs" xsi:schemaLocation="org.bigraphs ../metamodel/vm.ecore">
+<bigraphMetaModel:BBigraph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bigraphMetaModel="de.tud.inf.st.bigraphs" xsi:schemaLocation="de.tud.inf.st.bigraphs ../metamodel/vm.ecore">
   <bRoots>
     <bChild xsi:type="bigraphMetaModel:VM" name="v0">
       <bChild xsi:type="bigraphMetaModel:BSite"/>
