@@ -59,7 +59,7 @@ public class Analysis extends AbstractTestSupport {
     }
 
     @Test
-    void test_insertCoinRule_execute() throws InvalidReactionRuleException, IOException {
+    void execute_single_insertCoinRule() throws InvalidReactionRuleException, IOException {
         String prefixPath = "vending-machine/rules/";
         String suffixPath = ".xmi";
         List<String> ruleNames = List.of("insertCoin");
@@ -91,6 +91,7 @@ public class Analysis extends AbstractTestSupport {
         system.setAgent(agent);
         system.addReactionRule(ruleMap.get("insertCoin"));
         PureBigraph updatedModel = system.executeSingleRule();
+        // Execute twice
         system.setAgent(updatedModel);
         updatedModel = system.executeSingleRule();
         BigraphGraphvizExporter.toPNG(updatedModel, true, new File("agent-updated.png"));
@@ -101,7 +102,7 @@ public class Analysis extends AbstractTestSupport {
     // Transition Graph : State Space Analysis
 
     @Test
-    void explore_system_states() throws Exception {
+    void explore_all_system_states() throws Exception {
         InputStream is = getResourceAsStream("vending-machine/script/vendingmachine.bdsl");
         ParserService parser = InterpreterServiceManager.parser();
         BDSLDocument parse = parser.parse(is);
@@ -121,6 +122,56 @@ public class Analysis extends AbstractTestSupport {
                 System.out.println(call);
                 Object o = call.get();
                 assertNotNull(o);
+            }
+        }
+    }
+
+    /**
+     * Refill coffee action.
+     * Proof by induction.
+     *
+     * @throws Exception
+     */
+    @Test
+    void check_refill_coffee_rule() throws Exception {
+//        final String teaOrCoffee = "Tea";
+        final String teaOrCoffee = "Coffee";
+
+        InputStream is = getResourceAsStream("vending-machine/script/vendingmachine_refill" + teaOrCoffee + "_test.bdsl");
+        ParserService parser = InterpreterServiceManager.parser();
+        BDSLDocument parse = parser.parse(is);
+
+        final int numOfTransitions = 3;
+
+        ModelCheckingOptions opts = ModelCheckingOptions.create().and(
+                        transitionOpts().setMaximumTransitions(numOfTransitions).create())
+                .and(exportOpts().setReactionGraphFile(new File("transition-graph.png")).create());
+        MainBlockEvalVisitorImpl mainEvalVisitor = (MainBlockEvalVisitorImpl) new MainBlockEvalVisitorImpl(
+                (MainStatementEvalVisitorImpl) new MainStatementEvalVisitorImpl().withModelCheckingOptions(opts)
+        );
+
+        List<BdslStatementInterpreterResult> output = mainEvalVisitor.beginVisit(parse.getMain());
+        Iterator<BdslStatementInterpreterResult> iterator = output.iterator();
+        while (iterator.hasNext()) {
+            BdslStatementInterpreterResult next = iterator.next();
+            Optional<Object> call = next.getBdslExecutableStatement().call();
+            if (call.isPresent()) {
+                Object objResult = call.get();
+                assertNotNull(objResult);
+                if (objResult instanceof PureBigraphModelChecker) {
+                    PureBigraphModelChecker mc = (PureBigraphModelChecker) objResult;
+                    ReactionGraph<PureBigraph> reactionGraph = mc.getReactionGraph();
+                    assertEquals(numOfTransitions + 1, reactionGraph.getGraph().vertexSet().size());
+                    assertEquals(numOfTransitions, reactionGraph.getGraph().edgeSet().size());
+                    int i = reactionGraph.getGraph().vertexSet().stream().map(x -> x.getLabel().replaceAll("a[\\:_]", ""))
+                            .mapToInt(Integer::parseInt).max().orElseThrow(IllegalStateException::new);
+                    String lastStateLabel = "a_" + i;
+                    String canonicalForm = reactionGraph.getGraph().vertexSet().stream().filter(x -> x.getLabel().equals(lastStateLabel)).findFirst().get().getCanonicalForm();
+                    long teaCount = reactionGraph.getStateMap().get(canonicalForm).getNodes().stream()
+                            .map(BigraphEntity::getControl).filter(x -> x.getNamedType().stringValue().equalsIgnoreCase(teaOrCoffee))
+                            .count();
+                    assertEquals(numOfTransitions + 2, teaCount);
+                }
             }
         }
     }
@@ -290,45 +341,6 @@ public class Analysis extends AbstractTestSupport {
                 new FileOutputStream("src/test/resources/vending-machine/rules/giveTeaR.xmi"), schemaLocation);
     }
 
-    // Predicates
-
-    @Test
-    public void teaContainerIsEmpty() throws IOException {
-        String schemaLocation = "../metamodel/vm.ecore";
-        DynamicSignature sig = new VMSyntax().sig();
-        PureBigraphBuilder<DynamicSignature> builder = PureBigraphBuilder.create(sig, VMSyntax.eMetaModelData);
-        builder.root()
-                .child("VM").down()
-                .site()
-                .child("Container")
-                .child("Container").down()
-                .child("Coffee").site()
-        ;
-        PureBigraph bigraph = builder.create();
-        BigraphFileModelManagement.Store.exportAsInstanceModel(bigraph,
-                new FileOutputStream("src/test/resources/vending-machine/predicates/teaEmpty.xmi"), schemaLocation);
-    }
-
-    @Test
-    public void coffeeContainerIsEmpty() throws IOException {
-        String schemaLocation = "../metamodel/vm.ecore";
-        DynamicSignature sig = new VMSyntax().sig();
-        PureBigraphBuilder<DynamicSignature> builder = PureBigraphBuilder.create(sig, VMSyntax.eMetaModelData);
-        builder.root()
-                .child("VM").down()
-                .site()
-                .child("Container")
-                .child("Container").down()
-                .child("Tea").site()
-        ;
-        PureBigraph bigraph = builder.create();
-        BigraphFileModelManagement.Store.exportAsInstanceModel(bigraph,
-                new FileOutputStream("src/test/resources/vending-machine/predicates/coffeeEmpty.xmi"), schemaLocation);
-    }
-
-
-    /// //////////////////////////////////////////////////////////////////
-
     @Test
     void createRules_refillTea() throws IOException {
         String schemaLocation = "../metamodel/vm.ecore";
@@ -371,7 +383,6 @@ public class Analysis extends AbstractTestSupport {
 
     @Test
     void createRules_refillCoffee() throws IOException {
-        //        String schemaLocation = "vm.ecore";
         String schemaLocation = "../metamodel/vm.ecore";
         DynamicSignature sig = new VMSyntax().sig();
         // One container already contains coffee
@@ -410,52 +421,39 @@ public class Analysis extends AbstractTestSupport {
                 new FileOutputStream("src/test/resources/vending-machine/rules/refillCoffee3R.xmi"), schemaLocation);
     }
 
+    // Predicates
 
-    /**
-     * Refill coffee action.
-     * Proof by induction.
-     *
-     * @throws Exception
-     */
     @Test
-    void refill_coffee_rule() throws Exception {
-//        InputStream is = getResourceAsStream("vending-machine/script/vendingmachine_refillTea_test.bdsl");
-        InputStream is = getResourceAsStream("vending-machine/script/vendingmachine_refillCoffee_test.bdsl");
-        ParserService parser = InterpreterServiceManager.parser();
-        BDSLDocument parse = parser.parse(is);
+    public void createPred_teaContainerIsEmpty() throws IOException {
+        String schemaLocation = "../metamodel/vm.ecore";
+        DynamicSignature sig = new VMSyntax().sig();
+        PureBigraphBuilder<DynamicSignature> builder = PureBigraphBuilder.create(sig, VMSyntax.eMetaModelData);
+        builder.root()
+                .child("VM").down()
+                .site()
+                .child("Container")
+                .child("Container").down()
+                .child("Coffee").site()
+        ;
+        PureBigraph bigraph = builder.create();
+        BigraphFileModelManagement.Store.exportAsInstanceModel(bigraph,
+                new FileOutputStream("src/test/resources/vending-machine/predicates/teaEmpty.xmi"), schemaLocation);
+    }
 
-        final int numOfTransitions = 3;
-
-        ModelCheckingOptions opts = ModelCheckingOptions.create().and(
-                        transitionOpts().setMaximumTransitions(numOfTransitions).create())
-                .and(exportOpts().setReactionGraphFile(new File("transition-graph.png")).create());
-        MainBlockEvalVisitorImpl mainEvalVisitor = (MainBlockEvalVisitorImpl) new MainBlockEvalVisitorImpl(
-                (MainStatementEvalVisitorImpl) new MainStatementEvalVisitorImpl().withModelCheckingOptions(opts)
-        );
-
-        List<BdslStatementInterpreterResult> output = mainEvalVisitor.beginVisit(parse.getMain());
-        Iterator<BdslStatementInterpreterResult> iterator = output.iterator();
-        while (iterator.hasNext()) {
-            BdslStatementInterpreterResult next = iterator.next();
-            Optional<Object> call = next.getBdslExecutableStatement().call();
-            if (call.isPresent()) {
-                Object objResult = call.get();
-                assertNotNull(objResult);
-                if (objResult instanceof PureBigraphModelChecker) {
-                    PureBigraphModelChecker mc = (PureBigraphModelChecker) objResult;
-                    ReactionGraph<PureBigraph> reactionGraph = mc.getReactionGraph();
-                    assertEquals(numOfTransitions + 1, reactionGraph.getGraph().vertexSet().size());
-                    assertEquals(numOfTransitions, reactionGraph.getGraph().edgeSet().size());
-                    int i = reactionGraph.getGraph().vertexSet().stream().map(x -> x.getLabel().replaceAll("a[\\:_]", ""))
-                            .mapToInt(Integer::parseInt).max().orElseThrow(IllegalStateException::new);
-                    String lastStateLabel = "a_" + i;
-                    String canonicalForm = reactionGraph.getGraph().vertexSet().stream().filter(x -> x.getLabel().equals(lastStateLabel)).findFirst().get().getCanonicalForm();
-                    long teaCount = reactionGraph.getStateMap().get(canonicalForm).getNodes().stream()
-                            .map(BigraphEntity::getControl).filter(x -> x.getNamedType().stringValue().equalsIgnoreCase("Coffee"))
-                            .count();
-                    assertEquals(numOfTransitions + 2, teaCount);
-                }
-            }
-        }
+    @Test
+    public void createPred_coffeeContainerIsEmpty() throws IOException {
+        String schemaLocation = "../metamodel/vm.ecore";
+        DynamicSignature sig = new VMSyntax().sig();
+        PureBigraphBuilder<DynamicSignature> builder = PureBigraphBuilder.create(sig, VMSyntax.eMetaModelData);
+        builder.root()
+                .child("VM").down()
+                .site()
+                .child("Container")
+                .child("Container").down()
+                .child("Tea").site()
+        ;
+        PureBigraph bigraph = builder.create();
+        BigraphFileModelManagement.Store.exportAsInstanceModel(bigraph,
+                new FileOutputStream("src/test/resources/vending-machine/predicates/coffeeEmpty.xmi"), schemaLocation);
     }
 }

@@ -22,7 +22,7 @@
         <!-- Versions -->
         <bigraph-version>2.2.0</bigraph-version>
         <bdsl.grammar.version>2.0.1</bdsl.grammar.version>
-        <bdsl.interpreter.version>2.2.0</bdsl.interpreter.version>
+        <bdsl.interpreter.version>2.2.1</bdsl.interpreter.version>
         <spring.data.cdo.version>0.7.5</spring.data.cdo.version>
         <jupiter.version>5.8.1</jupiter.version>
         <google.guice.version>5.1.0</google.guice.version>

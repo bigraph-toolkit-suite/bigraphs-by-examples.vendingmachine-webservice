@@ -65,10 +65,7 @@ $ java -jar ./target/code-samples-1.0-SNAPSHOT.jar
 
 ### Open the Browser
 
-Afterward, open any browser and go to the following URL:
-```
-http://localhost:8080/
-```
+Afterward, open any browser and go to the following URL: [http://localhost:8080/](http://localhost:8080/)
 
 ## Remarks
 

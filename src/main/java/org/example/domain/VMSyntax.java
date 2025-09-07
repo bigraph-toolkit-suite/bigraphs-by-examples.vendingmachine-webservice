@@ -16,13 +16,13 @@ import static org.bigraphs.framework.core.factory.BigraphFactory.pureSignatureBu
  * @author Dominik Grzelak
  */
 public class VMSyntax {
-    public final static String NSURI = "org.bigraphs";
+    public final static String NSURI = "de.tud.inf.st.bigraphs";
     public final static EMetaModelData eMetaModelData = EMetaModelData.builder()
             .setName("vm").setNsPrefix("bigraphMetaModel").setNsUri(VMSyntax.NSURI).create();
     public final static EPackage BIGRAPH_META_MODEL;
 
     static {
-        EPackage ePackage = createOrGetBigraphMetaModel(new VMSyntax().sig());
+        EPackage ePackage = createOrGetBigraphMetaModel(new VMSyntax().sig(), eMetaModelData);
         BIGRAPH_META_MODEL = ePackage;
     }
 
