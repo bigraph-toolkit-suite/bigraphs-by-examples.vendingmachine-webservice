@@ -44,8 +44,6 @@ public class VendingMachineObject implements PropertyChangeListener {
     public static final String MODEL = "emodel"; // variable name
     public static final String ID = "cdoid"; // variable name
 
-    //    @Autowired
-//    public VMSyntax vmSyntax;
     @Autowired
     public VendingMachineListener vendingMachineListener;
     @Autowired
